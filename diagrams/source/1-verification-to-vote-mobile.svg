@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 1086" width="400" height="1086" font-family="Be Vietnam Pro, Segoe UI, sans-serif" role="img" aria-labelledby="d1m-t d1m-d">
+  <title id="d1m-t">From verification to a recorded vote</title>
+  <desc id="d1m-d">Portrait version of the path from verification to a recorded vote. Connect a wallet, verify with Averer and enable the wallet on Redbelly Access. When a proposal is published its snapshot block is fixed. A wallet verified at that block opens the proposal, sees Eligible to vote, chooses and signs, and its vote is recorded. A wallet not verified at the snapshot is not eligible for that proposal.</desc>
+  <style>@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap");</style>
+  <style>
+    .d1-flow { stroke-dasharray: 10 14; animation: d1-march 1.4s linear infinite; }
+    @keyframes d1-march { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: reduce) { .d1-flow { animation: none; } }
+  </style>
+  <rect x="0" y="0" width="400" height="1086" rx="8" fill="#141f26"/>
+
+  <text x="24" y="40" font-size="22" fill="#f1f5f8" font-weight="700">How a vote happens</text>
+  <text x="24" y="62" font-size="13" fill="#8fa1ad">From getting verified on Redbelly Access</text>
+  <text x="24" y="80" font-size="13" fill="#8fa1ad">to a recorded vote on the governance platform</text>
+  <g transform="translate(0,96)">
+  <defs><path id="d1m-route" d="M44 100 V924"/><path id="d1m-route-late" d="M44 100 V470 H340"/></defs>
+  <text x="24" y="24" font-size="11.5" font-weight="600" letter-spacing="1.6" fill="#8fa1ad">ONCE · ON REDBELLY ACCESS</text>
+  <text x="24" y="46" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12.5" fill="#ffb3ae">access.redbelly.network</text>
+  <rect x="16" y="322" width="368" height="232" rx="8" fill="#1d3140"/>
+  <text x="76" y="348" font-size="10.5" font-weight="600" letter-spacing="1.6" fill="#8fa1ad">EVERY PROPOSAL · BEFORE VOTING OPENS</text>
+  <text x="76" y="373" font-size="19" fill="#f1f5f8" font-weight="700">Snapshot block fixed</text>
+  <text x="76" y="396" font-size="15" fill="#c2ced6">Eligibility and voting power are</text>
+  <text x="76" y="414" font-size="15" fill="#c2ced6">read at this block only.</text>
+  <text x="76" y="604" font-size="10.5" font-weight="600" letter-spacing="1.6" fill="#8fa1ad">EACH VOTE · ON THE GOVERNANCE PLATFORM</text>
+  <text x="76" y="624" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" fill="#ffb3ae">redbelly-governance.vercel.app</text>
+  <path d="M44 100 V924" fill="none" stroke="#EF5350" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round"/>
+  <path class="d1-flow" d="M44 100 V924" fill="none" stroke="#EF5350" stroke-width="3" stroke-linecap="round"/>
+  <text x="76" y="450" font-size="16" fill="#f1f5f8" font-weight="700">Verified at the snapshot?</text>
+  <path d="M62 470 L330 470" fill="none" stroke="#ffb4ab" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round"/>
+  <path d="M334 464 l12 12 M346 464 l-12 12" stroke="#ffb4ab" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="300" y="462" font-size="12.5" fill="#ffb4ab" font-weight="600" text-anchor="middle">No</text>
+  <text x="76" y="497" font-size="15" fill="#ffb4ab" font-weight="700">Not eligible for this proposal.</text>
+  <text x="76" y="517" font-size="14" fill="#c2ced6">Eligible for proposals published later.</text>
+  <text x="56" y="582" font-size="12.5" fill="#86EFAC" font-weight="600">Yes</text>
+  <circle cx="44" cy="100" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="0.000s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="0.000s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="184" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="1.223s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="1.223s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="268" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="2.447s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="2.447s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="470" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="1.388s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="1.388s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="672" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="0.330s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="0.330s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="756" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="1.553s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="1.553s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="840" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="2.777s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="2.777s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="924" r="18" fill="none" stroke="#EF5350" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="4s" begin="0.000s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.2250;1.0000"/>
+    <animate attributeName="opacity" dur="4s" begin="0.000s" repeatCount="indefinite" values="0.8;0;0" keyTimes="0.0000;0.2250;1.0000"/>
+  </circle>
+  <circle cx="44" cy="470" r="18" fill="none" stroke="#ffb4ab" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="12s" begin="3.388s" repeatCount="indefinite" values="18;38;38" keyTimes="0.0000;0.0833;1.0000"/>
+    <animate attributeName="opacity" dur="12s" begin="3.388s" repeatCount="indefinite" values="0.9;0;0" keyTimes="0.0000;0.0833;1.0000"/>
+  </circle>
+  <circle cx="340" cy="470" r="9" fill="none" stroke="#ffb4ab" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="12s" begin="7.699s" repeatCount="indefinite" values="9;24;24" keyTimes="0.0000;0.0750;1.0000"/>
+    <animate attributeName="opacity" dur="12s" begin="7.699s" repeatCount="indefinite" values="0.9;0;0" keyTimes="0.0000;0.0750;1.0000"/>
+  </circle>
+  <g id="d1m-w0" opacity="0">
+    <animate attributeName="opacity" dur="12s" begin="0.00s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0.0000;0.0125;0.9792;1.0000"/>
+    <circle r="11" fill="none" stroke="#EF5350" stroke-width="2.5" opacity="0">
+      <animate attributeName="opacity" dur="12s" begin="0.00s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0.0000;0.2039;0.2164;1.0000"/>
+    </circle>
+    <circle r="6" fill="#f1f5f8"/>
+    <animateMotion dur="12s" begin="0.00s" repeatCount="indefinite"><mpath href="#d1m-route"/></animateMotion>
+  </g>
+  <g id="d1m-w1" opacity="0">
+    <animate attributeName="opacity" dur="12s" begin="-4.00s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0.0000;0.0125;0.9792;1.0000"/>
+    <circle r="11" fill="none" stroke="#EF5350" stroke-width="2.5" opacity="0">
+      <animate attributeName="opacity" dur="12s" begin="-4.00s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0.0000;0.2039;0.2164;1.0000"/>
+    </circle>
+    <circle r="6" fill="#f1f5f8"/>
+    <animateMotion dur="12s" begin="-4.00s" repeatCount="indefinite"><mpath href="#d1m-route"/></animateMotion>
+  </g>
+  <g id="d1m-w2" opacity="0">
+    <animate attributeName="opacity" dur="12s" begin="-8.00s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0.0000;0.0125;0.9792;1.0000"/>
+    <circle r="11" fill="none" stroke="#EF5350" stroke-width="2.5" opacity="0">
+      <animate attributeName="opacity" dur="12s" begin="-8.00s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0.0000;0.2039;0.2164;1.0000"/>
+    </circle>
+    <circle r="6" fill="#f1f5f8"/>
+    <animateMotion dur="12s" begin="-8.00s" repeatCount="indefinite"><mpath href="#d1m-route"/></animateMotion>
+  </g>
+  <g id="d1m-late" opacity="0">
+    <animate attributeName="opacity" dur="12s" begin="-2.00s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0.0000;0.0125;0.7874;0.8083;1.0000"/>
+    <circle r="11" fill="none" stroke="#EF5350" stroke-width="2.5" opacity="0">
+      <animate attributeName="opacity" dur="12s" begin="-2.00s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0.0000;0.2039;0.2164;1.0000"/>
+    </circle>
+    <circle r="6" fill="#f1f5f8"/>
+    <animateMotion dur="12s" begin="-2.00s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.8083;1"><mpath href="#d1m-route-late"/></animateMotion>
+  </g>
+  <rect x="29" y="455" width="30" height="30" rx="4" transform="rotate(45 44 470)" fill="#1d3140" stroke="#EF5350" stroke-width="3"/>
+  <circle cx="44" cy="100" r="18" fill="#141f26" stroke="#EF5350" stroke-width="3"/>
+  <text x="44" y="105" font-size="15" font-weight="700" fill="#f1f5f8" text-anchor="middle">1</text>
+  <text x="76" y="99" font-size="18" fill="#f1f5f8" font-weight="700">Connect a wallet</text>
+  <text x="76" y="119" font-size="15" fill="#c2ced6">MetaMask or Coinbase Wallet</text>
+  <circle cx="44" cy="184" r="18" fill="#141f26" stroke="#EF5350" stroke-width="3"/>
+  <text x="44" y="189" font-size="15" font-weight="700" fill="#f1f5f8" text-anchor="middle">2</text>
+  <text x="76" y="183" font-size="18" fill="#f1f5f8" font-weight="700">Verify your identity</text>
+  <text x="76" y="203" font-size="15" fill="#c2ced6">With Averer, passport-backed</text>
+  <circle cx="44" cy="268" r="18" fill="#141f26" stroke="#EF5350" stroke-width="3"/>
+  <text x="44" y="273" font-size="15" font-weight="700" fill="#f1f5f8" text-anchor="middle">3</text>
+  <text x="76" y="267" font-size="18" fill="#f1f5f8" font-weight="700">Enable the wallet</text>
+  <text x="76" y="287" font-size="15" fill="#c2ced6">Gets the Network Access Credential.</text>
+  <text x="76" y="306" font-size="15" fill="#c2ced6">The issuer covers fees.</text>
+  <circle cx="44" cy="672" r="18" fill="#141f26" stroke="#EF5350" stroke-width="3"/>
+  <text x="44" y="677" font-size="15" font-weight="700" fill="#f1f5f8" text-anchor="middle">4</text>
+  <text x="76" y="671" font-size="18" fill="#f1f5f8" font-weight="700">Open the proposal</text>
+  <text x="76" y="691" font-size="15" fill="#c2ced6">Connect the same wallet</text>
+  <circle cx="44" cy="756" r="18" fill="#141f26" stroke="#EF5350" stroke-width="3"/>
+  <text x="44" y="761" font-size="15" font-weight="700" fill="#f1f5f8" text-anchor="middle">5</text>
+  <text x="76" y="755" font-size="18" fill="#f1f5f8" font-weight="700">“Eligible to vote”</text>
+  <text x="76" y="775" font-size="15" fill="#c2ced6">Your voting power is shown</text>
+  <circle cx="44" cy="840" r="18" fill="#141f26" stroke="#EF5350" stroke-width="3"/>
+  <text x="44" y="845" font-size="15" font-weight="700" fill="#f1f5f8" text-anchor="middle">6</text>
+  <text x="76" y="839" font-size="18" fill="#f1f5f8" font-weight="700">Choose and sign</text>
+  <text x="76" y="859" font-size="15" fill="#c2ced6">A signature, not a transaction.</text>
+  <text x="76" y="878" font-size="15" fill="#c2ced6">No gas.</text>
+  <circle cx="44" cy="924" r="18" fill="#EF5350"/>
+  <path d="M35 925 l6 6 l12 -13" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="76" y="923" font-size="18" fill="#f1f5f8" font-weight="700">Vote recorded</text>
+  <text x="76" y="943" font-size="15" fill="#c2ced6">A public receipt follows</text>
+  <text x="24" y="976" font-size="13" fill="#8fa1ad" text-anchor="start">Last verified 30 Oct 2026</text>
+  </g>
+</svg>

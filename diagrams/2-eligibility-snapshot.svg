@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 572" width="1200" height="572" font-family="Be Vietnam Pro, Segoe UI, sans-serif" role="img" aria-labelledby="d2-t d2-d">
+  <title id="d2-t">When eligibility is checked</title>
+  <desc id="d2-d">A playhead runs along a timeline. When the proposal is published its snapshot block is taken and voting opens. Wallet A was verified before the snapshot and can vote. Wallet B was verified while voting was open, so it cannot vote on this proposal, but it can vote on the next proposal. RBNT received after the snapshot adds no voting power to this proposal.</desc>
+  <style>@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap");</style>
+  <rect x="0" y="0" width="1200" height="572" rx="8" fill="#141f26"/>
+
+  <text x="60" y="42" font-size="24" fill="#f1f5f8" font-weight="700">When eligibility is checked</text>
+  <text x="60" y="64" font-size="15" fill="#8fa1ad">Each proposal checks wallets once, at its snapshot block, taken just before voting opens</text>
+  <g transform="translate(0,72)">
+  <defs><clipPath id="d2-clip-b"><rect x="474" y="330" width="572" height="40">
+    <animate attributeName="width" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;572;572;0;0" keyTimes="0.0000;0.3333;0.7222;0.9500;0.9833;1.0000"/>
+  </rect></clipPath></defs>
+  <rect x="260" y="70" width="620" height="44" rx="4" fill="#1d3140">
+    <animate attributeName="width" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;620;620;0;0" keyTimes="0.0000;0.1806;0.6111;0.9500;0.9833;1.0000"/>
+  </rect>
+  <text x="570" y="98" font-size="16" font-weight="600" fill="#c2ced6" text-anchor="middle">Voting open · the proposal sets its own length
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.3611;0.3861;0.9500;0.9833;1.0000"/>
+  </text>
+  <line x1="60" y1="140" x2="1140" y2="140" stroke="#34444f" stroke-width="2"/>
+  <path d="M1132 133 l10 7 l-10 7" fill="none" stroke="#34444f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1140" y="168" font-size="12" font-weight="600" letter-spacing="1.6" fill="#8fa1ad" text-anchor="end">TIME</text>
+  <line x1="260" y1="40" x2="260" y2="470" stroke="#EF5350" stroke-width="3" stroke-linecap="round"/>
+  <text x="248" y="52" font-size="16" fill="#f1f5f8" font-weight="700" text-anchor="end">Proposal published</text>
+  <text x="248" y="76" font-size="14" fill="#ffb3ae" text-anchor="end">snapshot block</text>
+  <text x="248" y="96" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" fill="#ffb3ae" text-anchor="end">e.g. #3208192</text>
+  <line x1="880" y1="60" x2="880" y2="470" stroke="#8fa1ad" stroke-width="2" stroke-dasharray="4 6"/>
+  <text x="892" y="52" font-size="16" fill="#f1f5f8" font-weight="700">Voting closes</text>
+  <line x1="1040" y1="120" x2="1040" y2="470" stroke="#EF5350" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <text x="1040" y="112" font-size="14" fill="#f1f5f8" font-weight="600" text-anchor="middle">Next proposal</text>
+  <rect x="262" y="30" width="876" height="450" fill="#EF5350" opacity="0">
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;0.16;0;0" keyTimes="0.0000;0.1819;0.1886;0.2403;1.0000"/>
+  </rect>
+  <rect x="1042" y="30" width="96" height="450" fill="#EF5350" opacity="0">
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;0.16;0;0" keyTimes="0.0000;0.7236;0.7303;0.7819;1.0000"/>
+  </rect>
+  <text x="60" y="210" font-size="13" font-weight="600" letter-spacing="1.6" fill="#8fa1ad">WALLET A</text>
+  <path d="M150 240 L880 240" pathLength="1" fill="none" stroke="#86EFAC" stroke-width="3" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" dur="12s" begin="0s" repeatCount="indefinite" values="0 1;0 1;1 0;1 0;0 1;0 1" keyTimes="0.0000;0.1042;0.6111;0.9500;0.9833;1.0000"/>
+  </path>
+  <g><circle cx="150" cy="240" r="9" fill="#86EFAC"/>
+  <text x="150" y="272" font-size="15" fill="#c2ced6" text-anchor="middle">Verified</text>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.1042;0.1208;0.9500;0.9833;1.0000"/>
+  </g>
+  <g><rect x="440" y="222" width="300" height="36" rx="4" fill="#141f26"/>
+  <text x="590" y="246" font-size="17" fill="#86EFAC" font-weight="700" text-anchor="middle">Can vote on this proposal</text>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.2083;0.2333;0.9500;0.9833;1.0000"/>
+  </g>
+  <text x="60" y="320" font-size="13" font-weight="600" letter-spacing="1.6" fill="#8fa1ad">WALLET B</text>
+  <path d="M480 350 L1040 350" clip-path="url(#d2-clip-b)" fill="none" stroke="#ffb4ab" stroke-width="3" stroke-dasharray="7 7" stroke-linecap="round"/>
+  <path d="M1040 350 L1140 350" pathLength="1" fill="none" stroke="#86EFAC" stroke-width="3" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" dur="12s" begin="0s" repeatCount="indefinite" values="0 1;0 1;1 0;1 0;0 1;0 1" keyTimes="0.0000;0.7222;0.7917;0.9500;0.9833;1.0000"/>
+  </path>
+  <g><circle cx="480" cy="350" r="9" fill="#ffb4ab"/>
+  <text x="480" y="382" font-size="15" fill="#c2ced6" text-anchor="middle">Verified after the snapshot</text>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.3333;0.3500;0.9500;0.9833;1.0000"/>
+  </g>
+  <circle cx="480" cy="350" r="9" fill="none" stroke="#ffb4ab" stroke-width="2" opacity="0">
+    <animate attributeName="r" dur="12s" begin="0s" repeatCount="indefinite" values="9;9;26;26" keyTimes="0.0000;0.3333;0.4000;1.0000"/>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;0.9;0;0" keyTimes="0.0000;0.3333;0.3375;0.4000;1.0000"/>
+  </circle>
+  <g><rect x="580" y="332" width="280" height="36" rx="4" fill="#141f26"/>
+  <text x="720" y="356" font-size="17" fill="#ffb4ab" font-weight="700" text-anchor="middle">Not eligible for this one</text>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.4306;0.4556;0.9500;0.9833;1.0000"/>
+  </g>
+  <g><text x="1048" y="382" font-size="15" fill="#86EFAC" font-weight="600">Eligible from here</text>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.7361;0.7611;0.9500;0.9833;1.0000"/>
+  </g>
+  <text x="60" y="430" font-size="13" font-weight="600" letter-spacing="1.6" fill="#8fa1ad">RBNT RECEIVED</text>
+  <g><circle cx="560" cy="446" r="9" fill="none" stroke="#c2ced6" stroke-width="2.5"/>
+  <text x="582" y="442" font-size="16" fill="#c2ced6">Tokens received after the snapshot</text>
+  <text x="582" y="464" font-size="16" fill="#c2ced6">add no power to this proposal</text>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.3889;0.4139;0.9500;0.9833;1.0000"/>
+  </g>
+  <text x="1140" y="492" font-size="13" fill="#8fa1ad" text-anchor="end">Last verified 30 Oct 2026</text>
+  <g opacity="0"><line x1="60" y1="30" x2="60" y2="480" stroke="#f1f5f8" stroke-width="1.5"/>
+    <path d="M53 26 h14 l-7 9 z" fill="#f1f5f8"/>
+    <animateTransform attributeName="transform" type="translate" dur="12s" repeatCount="indefinite" values="0 0;0 0;1080 0;1080 0" keyTimes="0;0.0417;0.7917;1"/>
+    <animate attributeName="opacity" dur="12s" begin="0s" repeatCount="indefinite" values="0;0;0.7;0.7;0;0" keyTimes="0.0000;0.0417;0.0583;0.7917;0.8333;1.0000"/>
+  </g>
+  </g>
+</svg>

@@ -1,0 +1,889 @@
+<title>Redbelly DAO Voting Guide</title>
+<link rel="icon" type="image/png" sizes="32x32" href="{{FAV32}}">
+<link rel="icon" type="image/png" sizes="512x512" href="{{FAV512}}">
+<link rel="apple-touch-icon" href="{{TOUCH}}">
+<meta name="description" content="How voting works on the Redbelly DAO governance platform: getting verified, casting a vote, the snapshot block, and how votes are counted.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: "Viewfinder". The snapshot is a frozen moment, so every live diagram sits in a camera-style frame with corner marks and a readout. Chapters run 01 to 05 like frames on a roll. */
+:root {
+  color-scheme: dark;
+  --surface: #0c1317;
+  --background-deep: #0a1014;
+  --surface-container-lowest: #070c0f;
+  --surface-container-low: #111a20;
+  --surface-container: #17222a;
+  --surface-container-high: #223039;
+  --surface-container-highest: #2e3e49;
+  --surface-slate: #141f26;
+  --surface-steel: #1d3140;
+  --panel-edge: #263641;
+  --on-surface: #f1f5f8;
+  --on-surface-variant: #c2ced6;
+  --outline: #8fa1ad;
+  --outline-variant: #34444f;
+  --brand: #EF5350;
+  --brand-hover: #f95a56;
+  --on-brand: #ffffff;
+  --primary: #ffb3ae;
+  --ok: #86EFAC;
+  --warn: #FCD34D;
+  --error: #ffb4ab;
+  --brand-tint: #ffdad7;
+  --on-brand-tint: #0c1317;
+  --brand-soft: rgba(239, 83, 80, .14);
+  --ok-soft: rgba(134, 239, 172, .10);
+  --error-soft: rgba(255, 180, 171, .10);
+  --grid-dot: rgba(143, 161, 173, .16);
+  --scrim: rgba(7, 12, 15, .72);
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-base: 4px;
+  --radius-lg: 8px;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --surface: #EDF1F4; --background-deep: #EDF1F4; --surface-container-lowest: #FFFFFF;
+    --surface-container-low: #F4F6F8; --surface-container: #E6EBEF; --surface-container-high: #DAE1E7;
+    --surface-container-highest: #CCD6DD; --surface-slate: #FFFFFF; --surface-steel: #DDE6ED; --panel-edge: #D3DBE1;
+    --on-surface: #0F1A22; --on-surface-variant: #394853; --outline: #596975; --outline-variant: #C3CDD4;
+    --brand: #EF5350; --brand-hover: #D93E3B; --on-brand: #ffffff; --primary: #B3272A;
+    --ok: #15803D; --warn: #A16207; --error: #B3261E;
+    --brand-soft: rgba(239, 83, 80, .10); --ok-soft: rgba(21, 128, 61, .08); --error-soft: rgba(179, 38, 30, .07);
+    --grid-dot: rgba(89, 105, 117, .18); --scrim: rgba(15, 26, 34, .38);
+  }
+  :root:not([data-theme="dark"]) .logo-for-dark { display: none; }
+  :root:not([data-theme="dark"]) .logo-for-light { display: block; }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --surface: #EDF1F4; --background-deep: #EDF1F4; --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F4F6F8; --surface-container: #E6EBEF; --surface-container-high: #DAE1E7;
+  --surface-container-highest: #CCD6DD; --surface-slate: #FFFFFF; --surface-steel: #DDE6ED; --panel-edge: #D3DBE1;
+  --on-surface: #0F1A22; --on-surface-variant: #394853; --outline: #596975; --outline-variant: #C3CDD4;
+  --brand: #EF5350; --brand-hover: #D93E3B; --on-brand: #ffffff; --primary: #B3272A;
+  --ok: #15803D; --warn: #A16207; --error: #B3261E;
+  --brand-soft: rgba(239, 83, 80, .10); --ok-soft: rgba(21, 128, 61, .08); --error-soft: rgba(179, 38, 30, .07);
+  --grid-dot: rgba(89, 105, 117, .18); --scrim: rgba(15, 26, 34, .38);
+}
+:root[data-theme="light"] .logo-for-dark { display: none; }
+:root[data-theme="light"] .logo-for-light { display: block; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--background-deep);
+  color: var(--on-surface);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--background-deep); }
+a { color: var(--primary); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--brand-hover); }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: var(--radius-base); }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+code { font-family: var(--font-mono); font-size: .85em; background: var(--surface-container); border: 1px solid var(--panel-edge); padding: .06em .4em; border-radius: var(--radius-base); color: var(--on-surface); overflow-wrap: anywhere; }
+.ui { font-weight: 600; color: var(--on-surface); white-space: nowrap; }
+@media (max-width: 560px) { .ui { white-space: normal; } }
+.mono { font-family: var(--font-mono); }
+.label, .eyebrow, .hud, .frame-no, .sub-label, .limit .tag, .ranges { font-family: var(--font-sans); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+/* Status: a small dot plus a monospace label, never a filled pill */
+.state { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--on-surface); }
+.state::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--outline); flex: none; }
+.state.ok::before { background: var(--ok); }
+.state.no::before { background: var(--error); }
+
+.wrap {
+  --margin: 16px;
+  max-width: calc(1280px + var(--margin) * 2); margin: 0 auto;
+  padding-left: max(var(--margin), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--margin), env(safe-area-inset-right, 0px));
+}
+@media (min-width: 1024px) { .wrap { --margin: 64px; } }
+
+/* ---------- Header ---------- */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15;
+  background: color-mix(in srgb, var(--background-deep) 86%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--panel-edge);
+}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 10px; }
+.brandmark { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--on-surface); }
+.brandmark img { height: 36px; width: auto; }
+.logo-for-light { display: none; }
+.brandmark span { font-size: 13px; color: var(--outline); border-left: 1px solid var(--panel-edge); padding-left: 12px; }
+.roll { display: flex; gap: 2px; }
+.roll a { display: flex; align-items: baseline; gap: 6px; color: var(--on-surface-variant); text-decoration: none; font-size: 14px; padding: 6px 10px; border-radius: var(--radius-base); }
+.roll a b { font-weight: 600; font-size: 12px; color: var(--outline); }
+.roll a:hover { background: var(--surface-container); color: var(--on-surface); }
+.roll a.on { color: var(--on-surface); background: var(--surface-container); }
+.roll a.on b { color: var(--brand); }
+@media (max-width: 980px) {
+  .top .wrap { flex-wrap: wrap; row-gap: 4px; padding-block: 8px 6px; }
+  .roll { width: 100%; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-inline: -4px; }
+  .roll::-webkit-scrollbar { display: none; }
+  .roll a { flex: none; padding: 10px 12px; }
+}
+.ch h2:focus { outline: none; }
+
+/* ---------- Viewfinder frame ---------- */
+.vf[data-fig] { margin: 0; }
+.ch .wrap > .vf[data-fig] { margin-block: 24px; }
+.vf-cap { margin-top: 4px; }
+.vf { position: relative; border-radius: var(--radius-lg); background: var(--surface-container-lowest); border: 1px solid var(--panel-edge); padding: 14px; display: grid; gap: 12px; min-width: 0; }
+.vf > i { position: absolute; width: 22px; height: 22px; border: 0 solid var(--brand); pointer-events: none; }
+.vf > i:nth-of-type(1) { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; border-top-left-radius: var(--radius-lg); }
+.vf > i:nth-of-type(2) { top: -1px; right: -1px; border-top-width: 2px; border-right-width: 2px; border-top-right-radius: var(--radius-lg); }
+.vf > i:nth-of-type(3) { bottom: -1px; left: -1px; border-bottom-width: 2px; border-left-width: 2px; border-bottom-left-radius: var(--radius-lg); }
+.vf > i:nth-of-type(4) { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: var(--radius-lg); }
+.hud { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; padding: 2px 6px; font-size: 11.5px; color: var(--outline); }
+.hud b { color: var(--on-surface); font-weight: 700; }
+.hud .live { display: inline-flex; align-items: center; gap: 8px; }
+.hud .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); animation: blink 1.6s ease-in-out infinite; }
+.vf.paused .hud .live::before { animation: none; background: var(--outline); }
+.play { appearance: none; font: inherit; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 11.5px; color: var(--on-surface); background: transparent; border: 1px solid var(--outline-variant); border-radius: var(--radius-base); padding: 5px 10px; cursor: pointer; min-height: 30px; }
+.play:hover { border-color: var(--brand); }
+@media (pointer: coarse) { .play { min-height: 40px; padding: 8px 14px; } }
+.screen { overflow-x: auto; border-radius: var(--radius-base); -webkit-overflow-scrolling: touch; }
+.screen svg { display: block; width: 100%; height: auto; }
+.screen .wide svg { min-width: 720px; }
+.screen .tall { display: none; }
+@media (max-width: 900px) {
+  .screen .wide { display: none; }
+  .screen .tall { display: block; max-width: 480px; margin-inline: auto; }
+}
+@media (max-width: 560px) { .vf { padding: 10px 8px; } .hud, .vf-cap { padding-inline: 4px; } }
+.vf-cap { display: flex; justify-content: space-between; gap: 6px 18px; flex-wrap: wrap; padding: 0 6px 2px; font-size: 14px; color: var(--outline); }
+.vf-cap b { color: var(--on-surface-variant); font-weight: 600; }
+.vf-cap > span:first-child { max-width: 62ch; }
+.vf-cap .files { white-space: normal; }
+.vf-cap .files a { display: inline-block; padding: 10px 2px; margin: -10px 0; }
+@keyframes blink { 50% { opacity: .25; } }
+
+/* ---------- Hero ---------- */
+/* Hero band keeps the dark steel palette in both themes, as the brand asks. */
+.hero {
+  color-scheme: dark;
+  --surface: #0c1317; --background-deep: #0a1014; --surface-container-lowest: #070c0f;
+  --surface-container-low: #111a20; --surface-container: #17222a; --surface-container-high: #223039;
+  --surface-container-highest: #2e3e49; --surface-slate: #141f26; --surface-steel: #1d3140; --panel-edge: #263641;
+  --on-surface: #f1f5f8; --on-surface-variant: #c2ced6; --outline: #8fa1ad; --outline-variant: #34444f;
+  --brand-hover: #f95a56; --primary: #ffb3ae; --ok: #86EFAC; --warn: #FCD34D; --error: #ffb4ab;
+  --brand-soft: rgba(239, 83, 80, .14); --ok-soft: rgba(134, 239, 172, .10); --error-soft: rgba(255, 180, 171, .10);
+  --grid-dot: rgba(143, 161, 173, .14);
+  color: var(--on-surface);
+  position: relative; border-bottom: 1px solid var(--panel-edge);
+  background-color: var(--surface-steel);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+.hero .wrap { position: relative; padding-block: 64px; display: grid; gap: 48px; }
+/* Title and intro on the left, quick answers stacked on the right */
+.hero-top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 64px; align-items: end; }
+.hero-main { display: grid; gap: 28px; min-width: 0; }
+.hero-intro { display: grid; gap: 14px; }
+.hero h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1.05; letter-spacing: -.02em; font-weight: 700; }
+/* The lead-in reads as part of the title, so it sits inside the h1 */
+.hero h1 .eyebrow { display: block; margin-bottom: 14px; font-size: 12px; line-height: 1.5; color: var(--on-surface-variant); }
+.hero h1 .l2 { display: block; font-weight: 300; color: var(--on-surface-variant); }
+.hero h1 em { font-style: normal; color: var(--brand); }
+.lede { color: var(--on-surface-variant); font-size: 18px; line-height: 1.55; max-width: 62ch; }
+.stamp { font-size: 13px; color: var(--outline); }
+.answers { display: grid; grid-template-columns: minmax(0, 1fr); border-bottom: 1px solid var(--outline-variant); }
+.answers a { display: grid; align-content: start; gap: 4px; padding: 14px 0; border-top: 1px solid var(--outline-variant); text-decoration: none; color: var(--on-surface); }
+.answers .q { font-size: 13px; color: var(--outline); }
+.answers .a { font-size: 16px; font-weight: 600; line-height: 1.4; }
+.answers a:hover .a { color: var(--primary); }
+@media (max-width: 960px) {
+  .hero .wrap { padding-block: 48px; }
+  .hero-top { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .hero-main { gap: 20px; }
+  .answers a { padding: 12px 0; }
+}
+@media (max-width: 560px) { .stamp { font-size: 14px; } }
+
+/* ---------- Chapters ---------- */
+.ch { border-bottom: 1px solid var(--panel-edge); }
+.ch .wrap { padding-block: 80px; display: grid; gap: 48px; }
+.ch-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px 64px; align-items: start; }
+.frame-no { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; font-size: 12px; color: var(--outline); }
+.frame-no b { color: var(--primary); font-weight: 700; font-size: 12px; }
+.frame-no::after { content: ""; flex: 1; height: 1px; background: var(--panel-edge); }
+.ch h2 { font-size: clamp(32px, 3.6vw, 48px); line-height: 1.1; letter-spacing: -.02em; font-weight: 700; }
+.ch h2 span { display: block; font-weight: 300; color: var(--on-surface-variant); }
+.ch-intro { color: var(--on-surface-variant); font-size: 18px; line-height: 1.55; display: grid; gap: 12px; max-width: 62ch; }
+.ch-intro strong { color: var(--on-surface); font-weight: 600; }
+@media (max-width: 960px) { .ch-head { grid-template-columns: minmax(0, 1fr); } .ch .wrap { padding-block: 64px; } }
+
+/* 01 cards */
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.step-card { position: relative; background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); padding: 24px; display: grid; gap: 12px; align-content: start; overflow: hidden; transition: border-color .25s ease, transform .25s ease; }
+.step-card:hover { border-color: var(--outline-variant); transform: translateY(-3px); }
+.step-card .no { position: absolute; top: 16px; right: 22px; font-size: 48px; font-weight: 700; line-height: 1; color: var(--surface-container-high); letter-spacing: -.02em; }
+.step-card h3 { font-size: 21px; letter-spacing: -.01em; font-weight: 700; padding-right: 44px; }
+.step-card p { color: var(--on-surface-variant); font-size: 16px; }
+.step-card .chip { justify-self: start; font-size: 13px; font-weight: 600; color: var(--on-surface-variant); background: var(--surface-container); border: 1px solid var(--panel-edge); padding: 3px 9px; border-radius: var(--radius-base); }
+.aside-line { color: var(--on-surface-variant); font-size: 16px; border-left: 2px solid var(--outline-variant); padding: 4px 0 4px 16px; max-width: 60ch; }
+@media (max-width: 860px) { .trio { grid-template-columns: minmax(0, 1fr); } }
+
+/* 02 practice */
+.practice { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 64px; align-items: start; }
+.practice-side { display: grid; gap: 18px; color: var(--on-surface-variant); }
+.tracker { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--panel-edge); }
+.tracker li { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: start; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--panel-edge); color: var(--outline); transition: color .2s ease; }
+.tracker li > span { font-weight: 700; font-size: 14px; width: 32px; height: 32px; border-radius: var(--radius-base); display: grid; place-items: center; border: 2px solid var(--outline-variant); transition: all .2s ease; }
+.tracker li > span { grid-row: span 2; }
+.tracker li b { font-weight: 600; font-size: 16.5px; padding-top: 4px; }
+.tracker li small { grid-column: 2; font-size: 16px; line-height: 1.5; color: var(--on-surface-variant); }
+.tracker li.done { color: var(--on-surface-variant); }
+.tracker li.done > span { border-color: var(--outline); }
+.tracker li.now { color: var(--on-surface); }
+.tracker li.now > span { border-color: var(--brand); background: var(--brand); color: var(--on-brand); box-shadow: 0 0 0 5px var(--brand-soft); }
+.reset { justify-self: start; appearance: none; background: none; border: 0; color: var(--primary); font: inherit; font-size: 16px; cursor: pointer; padding: 12px 0; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 960px) { .practice { grid-template-columns: minmax(0, 1fr); } }
+
+.mock { position: relative; border-radius: var(--radius-base); background: var(--surface-slate); overflow: hidden; min-width: 0; }
+.mock-body { padding: 22px; display: grid; gap: 16px; }
+.p-title { display: grid; gap: 8px; }
+.chips { display: flex; gap: 6px 16px; flex-wrap: wrap; align-items: center; }
+.meta { font-size: 13.5px; color: var(--outline); }
+.p-title h3 { font-size: 21px; letter-spacing: -.015em; color: var(--on-surface); }
+.p-title small { color: var(--outline); font-size: 13px; }
+.panel { border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); background: var(--surface-container-low); padding: 16px; display: grid; gap: 12px; }
+.status { padding: 2px 0 4px; font-size: 16px; display: grid; gap: 6px; color: var(--on-surface-variant); }
+.choices { display: grid; gap: 8px; }
+.choice { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border: 1px solid var(--panel-edge); border-radius: var(--radius-base); cursor: pointer; color: var(--on-surface); font-size: 16px; background: var(--surface-slate); }
+.choice:hover { border-color: var(--outline); }
+.choice input { accent-color: var(--brand); width: 16px; height: 16px; margin: 0; }
+.choice:has(input:checked) { border-color: var(--brand); background: var(--brand-soft); }
+.field-label { font-size: 14px; color: var(--outline); }
+textarea { width: 100%; min-height: 58px; resize: vertical; font: inherit; font-size: 16px; color: var(--on-surface); background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-base); padding: 10px 12px; }
+.btn { appearance: none; font: inherit; font-weight: 700; font-size: 16px; min-height: 44px; border-radius: var(--radius-base); border: 0; padding: 10px 18px; cursor: pointer; background: var(--brand); color: var(--on-brand); width: 100%; transition: background .15s ease; }
+.btn:hover { background: var(--brand-hover); }
+.btn:disabled { background: var(--surface-container-high); color: var(--outline); cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--on-surface); border: 1px solid var(--outline-variant); }
+.btn.ghost:hover { background: var(--surface-container); border-color: var(--brand); }
+textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft); }
+.fine { font-size: 13.5px; color: var(--outline); text-align: center; }
+.ballot-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; padding: 10px 12px; border-radius: var(--radius-base); background: var(--surface-container); font-size: 14.5px; color: var(--on-surface); }
+.ballot-row .mono { color: var(--outline); }
+.wallet { position: absolute; inset: 0; background: var(--scrim); display: grid; place-items: center; padding: 16px; }
+.wallet-card { width: min(380px, 100%); background: var(--surface-container-lowest); border: 1px solid var(--outline-variant); border-radius: var(--radius-lg); display: grid; overflow: hidden; animation: pop .35s cubic-bezier(.2,.7,.2,1) both; }
+.wallet-card header { padding: 14px 16px; border-bottom: 1px solid var(--panel-edge); display: grid; gap: 2px; }
+.wallet-card header b { color: var(--on-surface); font-size: 16px; }
+.wallet-card header span { font-family: var(--font-mono); font-size: 12px; color: var(--outline); }
+.wallet-card dl { margin: 0; padding: 12px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; font-family: var(--font-mono); font-size: 12.5px; }
+.wallet-card dt { color: var(--outline); }
+.wallet-card dd { margin: 0; color: var(--on-surface); overflow-wrap: anywhere; }
+.wallet-card .w-note { margin: -4px 16px 10px; font-size: 12.5px; color: var(--outline); }
+.wallet-card .gas { margin: 0 16px; padding: 8px 10px; border-radius: var(--radius-base); background: var(--ok-soft); color: var(--ok); font-size: 13px; font-weight: 600; }
+.wallet-card .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 14px 16px 16px; }
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+
+.signbar { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: auto 1fr; gap: 14px; }
+.signbar > :nth-child(3) { grid-column: 2; grid-row: 1 / span 2; }
+.zero { background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); padding: 20px 22px; display: flex; align-items: center; gap: 20px; }
+.zero b { font-family: var(--font-sans); font-size: 64px; line-height: .9; font-weight: 700; color: var(--brand); letter-spacing: -.02em; }
+.zero span { color: var(--on-surface-variant); font-size: 18px; line-height: 1.45; }
+.signbar pre { margin: 0; padding: 20px 22px; background: var(--surface-container-lowest); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); font-family: var(--font-mono); font-size: 13px; line-height: 1.75; color: var(--on-surface-variant); overflow-x: auto; }
+.signbar pre .k { color: var(--primary); }
+.signbar pre .c { color: var(--outline); }
+.never { background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+.never p { font-size: 16px; color: var(--on-surface-variant); }
+.never .xd { font-size: 13px; color: var(--outline); margin: -4px 0 4px 2px; }
+.never .x { font-family: var(--font-mono); font-size: 13px; padding: 7px 10px; border-radius: var(--radius-base); border: 1px dashed var(--outline-variant); color: var(--on-surface-variant); text-decoration: line-through; text-decoration-color: var(--error); }
+@media (max-width: 960px) { .signbar { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; } .signbar > :nth-child(3) { grid-column: auto; grid-row: auto; } }
+
+/* 03 checker */
+.snap-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 64px; align-items: start; }
+.snap-text { display: grid; gap: 14px; color: var(--on-surface-variant); }
+.snap-text strong { color: var(--on-surface); font-weight: 600; }
+.checker { display: grid; gap: 16px; padding: 8px 6px 6px; }
+.checker .hint { color: var(--outline); font-size: 16px; }
+.strip { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 5px; padding-top: 32px; }
+.blk {
+  appearance: none; font: inherit; cursor: pointer; position: relative;
+  height: 92px; padding: 7px 3px; border-radius: var(--radius-base);
+  border: 1px solid var(--panel-edge); background: var(--surface-container-low); color: var(--outline);
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 2px;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.blk:hover { border-color: var(--outline); color: var(--on-surface); transform: translateY(-2px); }
+.blk .n { font-family: var(--font-mono); font-size: 11.5px; }
+.blk .short { display: none; }
+.blk.after { background: var(--surface-container); }
+.blk.sel { border-color: var(--on-surface); color: var(--on-surface); background: var(--surface-container-high); }
+.blk.sel::before { content: "You verified"; position: absolute; top: -29px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; font-weight: 600; color: var(--on-surface); background: var(--surface-container-highest); padding: 3px 8px; border-radius: var(--radius-base); }
+.blk.sel::after { content: ""; position: absolute; top: -8px; left: 50%; margin-left: -5px; border: 5px solid transparent; border-top-color: var(--surface-container-highest); }
+.blk.snap { cursor: default; background: var(--brand-tint); border: 2px solid var(--brand); color: var(--on-brand-tint); }
+.blk.snap:hover { transform: none; }
+.blk.snap .lbl { font-size: 9px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; margin-bottom: auto; max-width: 100%; overflow-wrap: anywhere; }
+.blk.snap .n { font-weight: 700; }
+.ranges { display: grid; grid-template-columns: 5fr 1fr 5fr; gap: 5px; font-size: 11px; letter-spacing: .08em; color: var(--outline); }
+.ranges span { border-top: 1px solid var(--outline-variant); padding-top: 6px; }
+.ranges span:nth-child(2) { border-top: 2px solid var(--brand); color: var(--primary); text-align: center; }
+.ranges span:last-child { text-align: right; }
+.verdict { display: grid; gap: 6px; padding: 14px 16px; border-radius: var(--radius-lg); border: 1px solid var(--panel-edge); background: var(--surface-slate); }
+.verdict b { font-size: 17px; color: var(--on-surface); }
+.verdict p { color: var(--on-surface-variant); font-size: 16px; }
+@media (max-width: 960px) { .snap-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) {
+  .strip { grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; }
+  .blk.edge { display: none; }
+  .blk { height: 78px; }
+  .blk .full { display: none; }
+  .blk .short { display: inline; }
+  .ranges { grid-template-columns: 4fr 1fr 4fr; }
+}
+
+.msgs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 600px) { .msgs { grid-template-columns: minmax(0, 1fr); } }
+.msg { background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.msg .say { font-size: 16px; font-weight: 600; color: var(--on-surface); line-height: 1.45; padding-left: 12px; border-left: 2px solid var(--outline-variant); }
+.msg .say::before { content: "\201C"; } .msg .say::after { content: "\201D"; }
+.msg .do { font-size: 16px; color: var(--on-surface-variant); }
+.sub-label { font-size: 12px; color: var(--outline); }
+
+/* 04 counting */
+.ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.way { background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); padding: 24px; display: grid; gap: 10px; align-content: start; }
+.way .tag { font-family: var(--font-mono); font-size: 12px; color: var(--primary); }
+.way h3 { font-size: 22px; letter-spacing: -.02em; font-weight: 700; }
+.way p { color: var(--on-surface-variant); font-size: 16px; }
+.way .power { margin-top: 6px; display: flex; align-items: baseline; gap: 12px; border-top: 1px solid var(--panel-edge); padding-top: 14px; }
+.way .power b { font-family: var(--font-mono); font-size: 38px; line-height: 1; font-weight: 700; color: var(--on-surface); letter-spacing: -.03em; }
+.way .power span { font-size: 14px; color: var(--outline); }
+@media (max-width: 760px) { .ways { grid-template-columns: minmax(0, 1fr); } }
+.sys { display: grid; gap: 48px; margin-top: 22px; margin-bottom: 24px; }
+@media (max-width: 960px) { .sys { gap: 40px; } }
+/* A plain list grouped by top borders, as the brand asks for anything that isn't a real card. Families sit in columns: pick, split, rank. */
+.systems { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, auto); grid-auto-flow: column; gap: 0 40px; border-bottom: 1px solid var(--panel-edge); }
+.systems > div { display: grid; gap: 6px; align-content: start; padding: 22px 0 24px; border-top: 1px solid var(--panel-edge); }
+.systems dt { font-weight: 700; color: var(--on-surface); font-size: 16px; }
+.systems dd { margin: 0; font-size: 16px; line-height: 1.5; color: var(--on-surface-variant); }
+@media (max-width: 900px) { .systems { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-flow: row; gap: 0 24px; } }
+@media (max-width: 560px) {
+  .systems { grid-template-columns: minmax(0, 1fr); }
+  .systems > div { grid-template-columns: 112px minmax(0, 1fr); gap: 4px 12px; padding: 14px 0; }
+}
+.two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 64px; }
+.two h3 { font-size: 24px; letter-spacing: -.02em; font-weight: 700; }
+.two .body { display: grid; gap: 12px; color: var(--on-surface-variant); max-width: 60ch; }
+.two strong { color: var(--on-surface); font-weight: 600; }
+@media (max-width: 960px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.two.result { margin-top: 22px; }
+/* Three linked wallets, one vote each */
+.sum { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 4px; }
+.tok { display: grid; gap: 2px; padding: 8px 12px; border: 1px solid var(--panel-edge); border-radius: var(--radius-base); background: var(--surface-container-low); }
+.tok small { font-size: 12px; color: var(--outline); }
+.tok b { font-family: var(--font-mono); font-size: 18px; font-weight: 500; color: var(--on-surface); font-variant-numeric: tabular-nums; }
+.tok.res { border-color: var(--outline); }
+.sum i { font-style: normal; font-family: var(--font-mono); color: var(--outline); }
+@media (max-width: 560px) { .tok { padding: 6px 9px; } .tok b { font-size: 16px; } .sum { gap: 6px; } }
+/* Result terms */
+.two .terms { margin: 0; gap: 0; }
+.terms > div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 4px 20px; padding: 14px 0; border-top: 1px solid var(--panel-edge); }
+.terms > div:last-child { border-bottom: 1px solid var(--panel-edge); }
+.terms dt { font-weight: 600; color: var(--on-surface); }
+.terms dd { margin: 0; }
+@media (max-width: 560px) { .terms > div { grid-template-columns: 112px minmax(0, 1fr); gap: 4px 12px; } }
+
+/* 05 limits */
+.limits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.limit { background: var(--surface-slate); border: 1px solid var(--panel-edge); border-radius: var(--radius-lg); padding: 20px; display: grid; gap: 10px; align-content: start; }
+.limit .tag { justify-self: start; font-size: 11.5px; color: var(--outline); }
+.limit h3 { font-size: 17.5px; line-height: 1.3; letter-spacing: -.01em; font-weight: 700; }
+.limit p { font-size: 16px; color: var(--on-surface-variant); }
+@media (max-width: 960px) { .limits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .limits { grid-template-columns: minmax(0, 1fr); } }
+
+/* Footer */
+.foot .wrap { padding-block: 48px 64px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 64px; font-size: 14.5px; color: var(--outline); }
+.foot p { max-width: 60ch; }
+.foot ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+.foot .brandmark img { height: 46px; }
+@media (max-width: 900px) { .foot .wrap { grid-template-columns: minmax(0, 1fr); } }
+
+/* Phones: nothing people read in full sentences goes below 16px */
+@media (max-width: 560px) { .vf-cap, .fine, .never .xd, .foot .wrap { font-size: 16px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="top">
+  <div class="wrap">
+    <a class="brandmark" href="#top" aria-label="Redbelly DAO voting guide, back to top">
+      <img class="logo-for-dark" src="{{LOGO_DARK}}" alt="Redbelly DAO" width="50" height="36">
+      <img class="logo-for-light" src="{{LOGO_LIGHT}}" alt="Redbelly DAO" width="50" height="36">
+      <span>Voting guide</span>
+    </a>
+    <nav class="roll" aria-label="Chapters">
+      <a href="#verify"><b>01</b>Verify</a>
+      <a href="#vote"><b>02</b>Vote</a>
+      <a href="#snapshot"><b>03</b>Eligibility</a>
+      <a href="#count"><b>04</b>Counting</a>
+      <a href="#limits"><b>05</b>Limits</a>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="wrap">
+      <div class="hero-top">
+        <div class="hero-main">
+          <h1 id="h-hero"><span class="eyebrow">The step-by-step guide to</span> Redbelly DAO <span class="l2"><em>voting.</em></span></h1>
+          <div class="hero-intro">
+            <p class="lede">Voting has moved off Snapshot and onto the Redbelly governance platform. Here's how it works now, from getting your wallet verified to seeing your vote land. New to voting? Chapters 01 and 02 are all you need for your first vote.</p>
+            <p class="stamp">Last verified <time datetime="2026-10-30">30 Oct 2026</time></p>
+          </div>
+        </div>
+        <nav class="answers" aria-label="Quick answers">
+          <a href="#snapshot"><span class="q">Why can't I vote?</span><span class="a">Your wallet has to be verified before the proposal's snapshot, taken just before voting opens.</span></a>
+          <a href="#snapshot"><span class="q">When is that checked?</span><span class="a">Once per proposal, at its snapshot block.</span></a>
+          <a href="#count"><span class="q">How many votes do I get?</span><span class="a">One per verified address, or your RBNT (Redbelly's own token) at the snapshot. The proposal says which.</span></a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 Verify -->
+  <section class="ch" id="verify" aria-labelledby="h-verify">
+    <div class="wrap">
+      <div class="ch-head">
+        <div class="frame-no"><b>01</b>/ 05 · Get verified</div>
+        <h2 id="h-verify">Get verified.<span>You only do it once.</span></h2>
+        <div class="ch-intro"><p>Only verified wallets can vote. You verify on <a href="https://access.redbelly.network/" target="_blank" rel="noopener">Redbelly Access</a>, not on the voting site, and it costs nothing.</p></div>
+      </div>
+      <figure class="vf" data-fig="1">
+        <i></i><i></i><i></i><i></i>
+        <div class="hud"><span class="live"><b>Fig 1</b>&nbsp;· the whole path</span><button class="play" type="button">Pause</button></div>
+        <div class="screen"><div class="wide" data-rest="2.4">{{D1}}</div><div class="tall" data-rest="2.0">{{D1M}}</div></div>
+        <figcaption class="vf-cap"><span><b>Every wallet takes this route.</b> Steps 1 to 3 happen once. Everything from step 4 happens on every proposal. The wallet that turns back wasn't verified by the snapshot.</span><span class="files">Image: <a href="diagrams/1-verification-to-vote.png" target="_blank" rel="noopener">PNG</a> · <a href="diagrams/1-verification-to-vote.svg" target="_blank" rel="noopener">SVG</a> · Phone version: <a href="diagrams/1-verification-to-vote-mobile.png" target="_blank" rel="noopener">PNG</a> · <a href="diagrams/1-verification-to-vote-mobile.svg" target="_blank" rel="noopener">SVG</a></span></figcaption>
+      </figure>
+      <div class="trio">
+        <article class="step-card">
+          <span class="no" aria-hidden="true">1</span>
+          <h3>Connect your wallet</h3>
+          <p>Connect MetaMask or Coinbase Wallet. That address becomes your public address on the network.</p>
+          <span class="chip">access.redbelly.network</span>
+        </article>
+        <article class="step-card">
+          <span class="no" aria-hidden="true">2</span>
+          <h3>Verify with Averer</h3>
+          <p>Averer, the accredited issuer, checks you're a real person using your passport.</p>
+          <span class="chip">passport-backed check</span>
+        </article>
+        <article class="step-card">
+          <span class="no" aria-hidden="true">3</span>
+          <h3>Enable the wallet</h3>
+          <p>Your wallet gets the Redbelly Network Access Credential (the voting site calls it a Receptor credential). You sign one transaction, and the issuer covers the fees.</p>
+          <span class="chip">one-time transaction</span>
+        </article>
+      </div>
+      <p class="aside-line">Got more than one wallet? You can link extras to the same identity on Access. Chapter 04 covers how they're counted.</p>
+    </div>
+  </section>
+
+  <!-- 02 Vote -->
+  <section class="ch" id="vote" aria-labelledby="h-vote">
+    <div class="wrap">
+      <div class="ch-head">
+        <div class="frame-no"><b>02</b>/ 05 · Cast a vote</div>
+        <h2 id="h-vote">Cast a vote.<span>Four steps, no gas.</span></h2>
+        <div class="ch-intro"><p>A proposal is a question the DAO votes on. Open a live one on the <a href="https://redbelly-governance.vercel.app/proposals" target="_blank" rel="noopener">governance platform</a>, connect the same wallet, pick an option and sign. Signing proves the vote came from your wallet. Unlike a transaction, it costs no gas, the fee the network charges to process a transaction.</p></div>
+      </div>
+
+      <div class="practice">
+        <div class="practice-side">
+          <ol class="tracker" id="tracker">
+            <li><span>4</span><b>Open the proposal and connect</b><small>Open a proposal under <span class="ui">Active</span> and select <span class="ui">Connect wallet</span>. Use a browser wallet, or scan the WalletConnect QR code with your phone. Connect the wallet you verified.</small></li>
+            <li><span>5</span><b>Check you're eligible and choose</b><small>The panel should say <span class="ui">Eligible to vote</span> and show your voting power. Pick an option. A reason is optional.</small></li>
+            <li><span>6</span><b>Review and sign</b><small>Select <span class="ui">Review and sign</span>, then approve the signature in your wallet. No gas.</small></li>
+            <li><span>7</span><b>Vote recorded</b><small>Your vote appears in the <span class="ui">Votes</span> list. An IPFS receipt link follows: a public copy of your signed vote that anyone can check. While voting is open you can use <span class="ui">Change vote</span>.</small></li>
+          </ol>
+          <p>The practice panel is modelled on the real one, using a past proposal as the example. It doesn't touch your wallet.</p>
+          <button class="reset" id="reset" type="button">Start over</button>
+        </div>
+
+        <div class="vf">
+          <i></i><i></i><i></i><i></i>
+          <div class="hud"><span><b>Practice</b> · redbelly-governance.vercel.app</span><span>nothing is sent</span></div>
+          <div class="mock" id="mock">
+            <div class="mock-body">
+              <div class="p-title">
+                <div class="chips"><span class="state ok">Active</span><span class="meta">Single choice · Verified wallets only</span></div>
+                <h3>Proposal Resubmission Policy</h3>
+              </div>
+              <div class="panel" id="panel"></div>
+            </div>
+            <div class="wallet" id="wallet" hidden>
+              <div class="wallet-card" role="dialog" aria-modal="false" aria-labelledby="w-title">
+                <header><b id="w-title">Signature request</b><span>redbelly-governance.vercel.app</span></header>
+                <dl>
+                  <dt>name</dt><dd>Redbelly Governance</dd>
+                  <dt>chainId</dt><dd>151</dd>
+                  <dt>from</dt><dd>your wallet address</dd>
+                  <dt>space</dt><dd>redbelly-dao</dd>
+                  <dt>proposal</dt><dd>f832b2b9-18fd-…</dd>
+                  <dt>choice</dt><dd id="w-choice">1</dd>
+                  <dt>reason</dt><dd id="w-reason">(none)</dd>
+                </dl>
+                <p class="w-note" id="w-note">The choice is the option's number. 1 is Yes.</p>
+                <p class="gas">No gas fee. Nothing leaves your wallet.</p>
+                <div class="acts"><button class="btn ghost" type="button" id="w-cancel">Reject</button><button class="btn" type="button" id="w-sign">Sign</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="signbar">
+        <div class="zero"><b>0</b><span>Gas to vote. A vote is a signed message, not a transaction.</span></div>
+        <div class="never">
+          <p>Your wallet shows the message before you sign. A real vote is named <span class="ui">Redbelly Governance</span> and lists your address, the proposal, your choice as option numbers, and your reason. It has no amount and no recipient.</p>
+        </div>
+        <div class="never">
+          <p>A real vote never asks for these. If you see one, reject it.</p>
+          <span class="x">approve / permit</span><small class="xd">lets a contract spend your tokens</small>
+          <span class="x">setApprovalForAll</span><small class="xd">hands over every NFT in a collection</small>
+          <span class="x">transfer / send</span><small class="xd">moves your funds, or asks for a gas fee</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Snapshot -->
+  <section class="ch" id="snapshot" aria-labelledby="h-snap">
+    <div class="wrap">
+      <div class="ch-head">
+        <div class="frame-no"><b>03</b>/ 05 · The snapshot rule</div>
+        <h2 id="h-snap">The snapshot rule.<span>Why verifying late doesn't count.</span></h2>
+        <div class="ch-intro"><p>If you're verified and still can't vote, it's usually timing.</p></div>
+      </div>
+
+      <div class="snap-grid">
+        <div class="snap-text">
+          <p>Every proposal has a <strong>snapshot block</strong>. The Redbelly chain records activity in numbered blocks, one after another, so a block number works like a timestamp. The snapshot block is the one recorded when the proposal is published, just before voting opens. It's on the proposal's <span class="ui">Details</span> tab. For the Resubmission Policy vote it was <code>3208192</code>. It has nothing to do with Snapshot, the old voting tool.</p>
+          <p>Your wallet is judged at that block only: <strong>was it verified</strong>, and on RBNT-weighted votes, <strong>how much did it hold</strong>. Verify after a proposal opens and you sit that one out, even with days of voting left. Later proposals will count you. RBNT that arrives mid-vote doesn't count either.</p>
+          <p>That way every voter is measured at the same moment, and nobody's eligibility shifts while votes come in.</p>
+        </div>
+        <div class="vf">
+          <i></i><i></i><i></i><i></i>
+          <div class="hud"><span><b>Try it</b> · when did your wallet get verified?</span><span>example proposal</span></div>
+          <div class="checker">
+            <p class="hint">Select a block. The red one is the snapshot.</p>
+            <div class="strip" id="strip" role="group" aria-label="Blocks on the Redbelly chain, oldest on the left"></div>
+            <div class="ranges" aria-hidden="true"><span>Before it went live</span><span>snapshot</span><span>While voting is open</span></div>
+            <div class="verdict" id="verdict" aria-live="polite">
+              <span class="state ok" id="v-state">Eligible</span>
+              <b id="v-head">You're in.</b>
+              <p id="v-body">Your wallet was verified before the snapshot, so you can vote on this proposal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <figure class="vf" data-fig="2">
+        <i></i><i></i><i></i><i></i>
+        <div class="hud"><span class="live"><b>Fig 2</b>&nbsp;· one proposal, start to finish</span><button class="play" type="button">Pause</button></div>
+        <div class="screen"><div class="wide" data-rest="10.8">{{D2}}</div><div class="tall" data-rest="10.8">{{D2M}}</div></div>
+        <figcaption class="vf-cap"><span><b>Wallet B</b> verified too late for this proposal, but in time for the next one.</span><span class="files">Image: <a href="diagrams/2-eligibility-snapshot.png" target="_blank" rel="noopener">PNG</a> · <a href="diagrams/2-eligibility-snapshot.svg" target="_blank" rel="noopener">SVG</a> · Phone version: <a href="diagrams/2-eligibility-snapshot-mobile.png" target="_blank" rel="noopener">PNG</a> · <a href="diagrams/2-eligibility-snapshot-mobile.svg" target="_blank" rel="noopener">SVG</a></span></figcaption>
+      </figure>
+
+      <span class="sub-label">If the voting panel says</span>
+      <div class="msgs">
+        <div class="msg"><span class="say">Complete KYC to participate in DAO voting</span><span class="do">KYC means identity verification. This wallet isn't verified yet. Finish on access.redbelly.network. You can vote on proposals published after that.</span></div>
+        <div class="msg"><span class="say">This address does not hold a Receptor credential on Redbelly.</span><span class="do">Shown under <span class="ui">Not eligible for this proposal</span>. It means the wallet had no credential at the snapshot, even if it's verified now. Wait for the next proposal, or connect a wallet that was verified earlier.</span></div>
+        <div class="msg"><span class="say">This address held no voting power at the proposal snapshot.</span><span class="do">It's a balance-weighted vote and this wallet held none of the counted token at the snapshot block.</span></div>
+        <div class="msg"><span class="say">Voting has closed.</span><span class="do">The vote is over. No new votes or changes are accepted.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Counting -->
+  <section class="ch" id="count" aria-labelledby="h-count">
+    <div class="wrap">
+      <div class="ch-head">
+        <div class="frame-no"><b>04</b>/ 05 · Counting</div>
+        <h2 id="h-count">How many votes?<span>It depends on the proposal.</span></h2>
+        <div class="ch-intro"><p>The author picks how votes are counted, and it's locked once the proposal is live. The voting system shows under the title. The strategy, which sets your voting power, is on the <span class="ui">Details</span> tab.</p></div>
+      </div>
+
+      <div class="ways">
+        <article class="way">
+          <span class="tag">strategy · verified-identity</span>
+          <h3>One verified address, one vote</h3>
+          <p>Every wallet verified at the snapshot gets one vote, however much RBNT it holds.</p>
+          <div class="power"><b>1.00</b><span>voting power per address</span></div>
+        </article>
+        <article class="way">
+          <span class="tag">strategy · native-balance</span>
+          <h3>RBNT balance</h3>
+          <p>RBNT is the Redbelly Network's own token. Your voting power is the RBNT your wallet held at the snapshot block. The wallet also had to be verified by then.</p>
+          <div class="power"><b>RBNT</b><span>held at the snapshot block</span></div>
+        </article>
+      </div>
+
+      <p class="aside-line">You'll hear it called "one vote per verified account". On the platform an account is a wallet address. A third strategy, token balance, works the same way but counts another token instead of RBNT.</p>
+
+      <div class="sys">
+        <div class="two">
+          <h3>Voting systems</h3>
+          <div class="body">
+            <p>The voting system decides how your power goes to the options. "One verified address, one vote" can also be picked as the voting system, and works as described above.</p>
+          </div>
+        </div>
+        <dl class="systems">
+          <div><dt>Single choice</dt><dd>Pick one option. All your power goes to it.</dd></div>
+          <div><dt>Approval</dt><dd>Back as many options as you like. Each gets your full power.</dd></div>
+          <div><dt>Weighted</dt><dd>Split your power across options.</dd></div>
+          <div><dt>Quadratic</dt><dd>Split your power. Large holders count for less.</dd></div>
+          <div><dt>Ranked choice</dt><dd>Rank the options. The lowest drops out each round until one has a majority.</dd></div>
+          <div><dt>Copeland</dt><dd>Rank the options. Each is compared head to head with every other.</dd></div>
+        </dl>
+      </div>
+
+      <div class="two">
+        <h3>What if I have more than one wallet?</h3>
+        <div class="body">
+          <p>Redbelly Access lets you add extra wallets to your verified identity, up to 10 in total. At 10, Access shows <span class="ui">Account allocation exhausted</span>. A wallet can belong to only one identity at a time.</p>
+          <p>The voting platform counts <strong>verified addresses, not people</strong>, and doesn't merge linked wallets. Each one verified at the snapshot votes on its own. Three linked wallets that each vote on a one-vote proposal add up to <span class="mono">3.00</span> votes. On an RBNT vote, each counts its own balance.</p>
+          <div class="sum" role="img" aria-label="Wallet A 1.00 plus Wallet B 1.00 plus Wallet C 1.00 equals 3.00 votes"><span class="tok"><small>Wallet A</small><b>1.00</b></span><i>+</i><span class="tok"><small>Wallet B</small><b>1.00</b></span><i>+</i><span class="tok"><small>Wallet C</small><b>1.00</b></span><i>=</i><span class="tok res"><small>Votes</small><b>3.00</b></span></div>
+        </div>
+      </div>
+
+      <div class="two result">
+        <h3>Reading a result</h3>
+        <dl class="body terms">
+          <div><dt>Quorum</dt><dd>The minimum voting power that has to take part.</dd></div>
+          <div><dt>Identity quorum</dt><dd>The minimum number of different verified voters.</dd></div>
+          <div><dt>If either is missed</dt><dd>The proposal closes as <span class="ui">No quorum</span>.</dd></div>
+          <div><dt>Second tally</dt><dd>Balance-weighted votes also show a second tally, one per verified address, for information only.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Limits -->
+  <section class="ch" id="limits" aria-labelledby="h-limits">
+    <div class="wrap">
+      <div class="ch-head">
+        <div class="frame-no"><b>05</b>/ 05 · Known limits</div>
+        <h2 id="h-limits">Known limits.<span>Good to know before you read a result.</span></h2>
+        <div class="ch-intro"><p>How the current setup behaves today, as the platform itself describes it.</p></div>
+      </div>
+      <div class="limits">
+        <article class="limit"><span class="tag">identity</span><h3>A verified address isn't always a different person</h3><p>One identity can have up to 10 wallets, and each one counts.</p></article>
+        <article class="limit"><span class="tag">timing</span><h3>Late verification can't catch a live vote</h3><p>Verify after a proposal opens and you can't vote on it, however long it has left.</p></article>
+        <article class="limit"><span class="tag">balances</span><h3>Balances freeze at the snapshot</h3><p>On balance-weighted votes, tokens moved after the snapshot block change nothing for that proposal.</p></article>
+        <article class="limit"><span class="tag">quorum</span><h3>One big holder can meet a power quorum alone</h3><p>An identity quorum only applies when the author sets one.</p></article>
+        <article class="limit"><span class="tag">proposals</span><h3>Live proposals can't be edited</h3><p>Text, options, counting method and dates stay exactly as published.</p></article>
+        <article class="limit"><span class="tag">history</span><h3>Old results came from Snapshot</h3><p>Proposals marked <span class="ui">imported</span> are past Snapshot votes. The rules on this page didn't apply to them.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <a class="brandmark" href="#top" aria-label="Back to top">
+        <img class="logo-for-dark" src="{{LOGO_DARK}}" alt="Redbelly DAO" width="63" height="46">
+        <img class="logo-for-light" src="{{LOGO_LIGHT}}" alt="Redbelly DAO" width="63" height="46">
+      </a>
+    </div>
+    <div>
+      <p>Everything here was checked against the live platform and its public information on 30 October 2026. It explains the rules as they are today and doesn't suggest changing them.</p>
+      <ul>
+        <li><a href="https://redbelly-governance.vercel.app/" target="_blank" rel="noopener">DAO voting platform</a>: proposals, the Details tab, the Wallet safety page</li>
+        <li><a href="https://access.redbelly.network/" target="_blank" rel="noopener">Redbelly Access</a>: verification and FAQ</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Live figures: play, pause, rest when off screen */
+  Array.prototype.forEach.call(document.querySelectorAll('.vf[data-fig]'), function (fig) {
+    var svgs = Array.prototype.filter.call(fig.querySelectorAll('.screen svg'), function (s) { return !!s.pauseAnimations; });
+    var btn = fig.querySelector('.play');
+    if (!svgs.length) { btn.hidden = true; return; }
+    function each(fn) { svgs.forEach(fn); }
+    // Until a figure is first seen it rests on its finished frame, so it never reads as empty.
+    var userPaused = reduce, visible = !('IntersectionObserver' in window), started = false;
+    function apply() {
+      if (visible && !userPaused && !started) { started = true; each(function (s) { s.setCurrentTime(0); }); }
+      each(function (s) { if (!userPaused && visible) s.unpauseAnimations(); else s.pauseAnimations(); });
+      fig.classList.toggle('paused', userPaused);
+      btn.textContent = userPaused ? 'Play' : 'Pause';
+      btn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+    }
+    each(function (s) { s.pauseAnimations(); s.setCurrentTime(parseFloat(s.parentElement.dataset.rest) || 0); });
+    btn.addEventListener('click', function () { userPaused = !userPaused; started = true; apply(); });
+    if (!visible) {
+      // A figure counts as seen once it fills a good part of the screen, however tall it is.
+      new IntersectionObserver(function (es) {
+        var e = es[0];
+        visible = e.isIntersecting && e.intersectionRect.height >= Math.min(e.boundingClientRect.height, window.innerHeight) * 0.25;
+        apply();
+      }, { threshold: [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.75, 1] }).observe(fig);
+    }
+    apply();
+  });
+
+  /* Chapter roll in the header */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.roll a'));
+  var chapters = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function mark() {
+    var cur = -1;
+    chapters.forEach(function (c, i) { if (c && c.getBoundingClientRect().top < window.innerHeight * 0.35) cur = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === cur); });
+  }
+  window.addEventListener('scroll', mark, { passive: true });
+  mark();
+
+  /* In-page links land with the chapter heading just under the sticky header */
+  var bar = document.querySelector('.top');
+  function landing(t) {
+    var head = t.querySelector('.frame-no') || t;
+    var barBottom = (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight;
+    var gap = window.innerWidth <= 560 ? 16 : 24;
+    return Math.max(0, Math.round(head.getBoundingClientRect().top + window.pageYOffset - barBottom - gap));
+  }
+  function go(hash, smooth) {
+    var t = hash === '#top' ? null : document.getElementById(hash.slice(1));
+    if (hash !== '#top' && !t) return false;
+    window.scrollTo({ top: t ? landing(t) : 0, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+    var h = t && t.querySelector('h2');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    return true;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (a) {
+    a.addEventListener('click', function (e) {
+      var hash = a.getAttribute('href');
+      if (go(hash, true)) { e.preventDefault(); if (location.hash !== hash) history.pushState(null, '', hash); }
+    });
+  });
+  if (location.hash) window.addEventListener('load', function () { go(location.hash, false); });
+
+  /* Snapshot checker */
+  var SNAP = 3208192, COUNT = 11, SNAP_I = 5, FIRST = SNAP - SNAP_I;
+  var strip = document.getElementById('strip');
+  var verdict = document.getElementById('verdict');
+  var vState = document.getElementById('v-state'), vHead = document.getElementById('v-head'), vBody = document.getElementById('v-body');
+  var cells = [];
+  for (var i = 0; i < COUNT; i++) {
+    var s = String(FIRST + i);
+    var el = document.createElement(i === SNAP_I ? 'div' : 'button');
+    el.className = 'blk' + (i === SNAP_I ? ' snap' : '') + (i > SNAP_I ? ' after' : '') + (i === 0 || i === COUNT - 1 ? ' edge' : '');
+    var num = '<span class="n"><span class="full">' + s + '</span><span class="short">' + s.slice(-3) + '</span></span>';
+    if (i === SNAP_I) {
+      el.innerHTML = num;
+      el.setAttribute('aria-label', 'Block ' + s + ', the snapshot block');
+    } else {
+      el.type = 'button';
+      el.innerHTML = num;
+      el.setAttribute('aria-label', 'I verified in block ' + s);
+      el.addEventListener('click', pick.bind(null, i));
+    }
+    strip.appendChild(el);
+    cells.push(el);
+  }
+  function pick(i) {
+    cells.forEach(function (c, k) {
+      c.classList.toggle('sel', k === i);
+      if (k !== SNAP_I) c.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+    });
+    var ok = i < SNAP_I;
+    vState.className = 'state ' + (ok ? 'ok' : 'no');
+    vState.textContent = ok ? 'Eligible' : 'Not eligible';
+    vHead.textContent = ok ? "You're in." : 'Not this one.';
+    vBody.textContent = ok
+      ? 'Your wallet was verified before the snapshot, so you can vote on this proposal.'
+      : "You verified after the snapshot, so this proposal won't count you. Any proposal published after you verified will.";
+  }
+  pick(2);
+
+  /* Practice panel */
+  var panel = document.getElementById('panel');
+  var wallet = document.getElementById('wallet');
+  var steps = Array.prototype.slice.call(document.querySelectorAll('#tracker li'));
+  var choice = null, reason = '';
+  var OPTIONS = ['Yes', 'No', 'Abstain'];
+  function track(n) { steps.forEach(function (li, k) { li.className = k < n ? 'done' : (k === n ? 'now' : ''); }); }
+  function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function stage0() {
+    track(0); wallet.hidden = true; choice = null; reason = '';
+    panel.innerHTML =
+      '<div class="status"><span class="state">Not connected</span><span>Connect your wallet to check eligibility</span></div>' +
+      '<button class="btn" type="button" id="m-connect">Connect wallet</button>' +
+      '<p class="fine">Voting is a signature, not a transaction. No gas, and nothing can be moved.</p>';
+    document.getElementById('m-connect').onclick = stage1;
+  }
+  function stage1() {
+    track(1); wallet.hidden = true;
+    panel.innerHTML =
+      '<div class="status"><span class="state ok">Eligible to vote</span><span>Your voting power: <span class="mono">1 vote</span></span></div>' +
+      '<div class="choices" role="radiogroup" aria-label="Your choice">' +
+      OPTIONS.map(function (o, k) {
+        return '<label class="choice"><input type="radio" name="m-choice" id="m-c' + k + '" value="' + o + '"' + (choice === o ? ' checked' : '') + '>' + o + '</label>';
+      }).join('') + '</div>' +
+      '<label class="field-label" for="m-reason">Reason (optional)</label>' +
+      '<textarea id="m-reason" placeholder="Why are you voting this way?">' + esc(reason) + '</textarea>' +
+      '<button class="btn" type="button" id="m-review"' + (choice ? '' : ' disabled') + '>Review and sign</button>' +
+      '<p class="fine">Signing costs no gas. Your signature proves the vote is yours.</p>';
+    var review = document.getElementById('m-review');
+    Array.prototype.forEach.call(panel.querySelectorAll('input[name="m-choice"]'), function (r) {
+      r.onchange = function () { choice = r.value; review.disabled = false; };
+    });
+    document.getElementById('m-reason').oninput = function (e) { reason = e.target.value; };
+    review.onclick = stage2;
+  }
+  function stage2() {
+    track(2);
+    var n = OPTIONS.indexOf(choice) + 1;
+    document.getElementById('w-choice').textContent = String(n);
+    document.getElementById('w-note').textContent = "The choice is the option's number. " + n + ' is ' + choice + '.';
+    document.getElementById('w-reason').textContent = reason.trim() ? reason.trim() : '(none)';
+    var review = panel.querySelector('#m-review');
+    review.textContent = 'Confirm the signature request in your wallet.';
+    review.disabled = true;
+    wallet.hidden = false;
+    document.getElementById('w-sign').focus({ preventScroll: true });
+  }
+  function stage3() {
+    track(3); wallet.hidden = true;
+    panel.innerHTML = '<div class="status"><span class="state">Recording</span><span>Your signature was received. Recording your vote...</span></div>';
+    setTimeout(function () {
+      steps.forEach(function (li) { li.className = 'done'; });
+      panel.innerHTML =
+        '<div class="status"><span class="state ok">Voted</span><span>✓ You have voted on this proposal. The IPFS receipt link follows once it is published.</span></div>' +
+        '<div class="ballot-row"><span>You</span><span>' + esc(choice) + '</span><span class="mono">1.00</span></div>' +
+        '<button class="btn ghost" type="button" id="m-change">Change vote</button>';
+      document.getElementById('m-change').onclick = stage1;
+    }, 1100);
+  }
+  document.getElementById('w-sign').onclick = stage3;
+  document.getElementById('w-cancel').onclick = stage1;
+  document.getElementById('reset').onclick = stage0;
+  stage0();
+})();
+</script>
